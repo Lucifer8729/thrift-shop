@@ -138,18 +138,15 @@ function App() {
           </AppBar>
           <Drawer variant="permanent" open={open}>
             <DrawerHeader>
-              {open ? (
-                <List sx={{ position: "fixed", left: 0 }}>
-                  <ListItem>
-                    <ListItemIcon sx={{ pl: 1 }}>
-                      <AccountCircleIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Username" />
-                  </ListItem>
-                </List>
-              ) : (
-                ""
-              )}
+              <List sx={{ position: "fixed", left: 0 }}>
+                <ListItem>
+                  <ListItemIcon sx={{ pl: 1 }}>
+                    <AccountCircleIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Username" />
+                </ListItem>
+              </List>
+
               <IconButton onClick={handleDrawerClose}>
                 {theme.direction === "rtl" ? (
                   <ChevronRightIcon />
@@ -222,7 +219,17 @@ function App() {
               <ListItemText primary="Logout" />
             </ListItem>
           </Drawer>
-          <Box component="main" sx={{ flexGrow: 1, p: 3, pt: 7 }}>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              p: 3,
+              pt: 10,
+              backgroundColor: "#e8eaf6",
+              minHeight: "100vh",
+              width: "100%",
+            }}
+          >
             {/* <DrawerHeader /> */}
             <Routes>
               <Route path="/signIn" element={<SignInSignUp />} />
