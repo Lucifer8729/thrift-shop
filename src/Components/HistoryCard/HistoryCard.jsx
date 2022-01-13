@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Grid, CardActionArea } from "@mui/material";
+import { Grid, CardActionArea, Modal, Box } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -10,10 +10,16 @@ import Typography from "@mui/material/Typography";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
+import ProductDetail from "../ProductDetail/ProductDetail";
+
 const HistoryCard = ({ img, title, location, timeLeft, currBid }) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <Card sx={{ maxWidth: 300 }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleOpen}>
         <CardMedia component="img" height="240" image={img} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div" color="#03045e">
@@ -47,6 +53,11 @@ const HistoryCard = ({ img, title, location, timeLeft, currBid }) => {
           </Button>
         </CardActions>
       </CardActionArea>
+      <Modal open={open} onClose={handleClose}>
+        <Box>
+          <ProductDetail close={handleClose} />
+        </Box>
+      </Modal>
     </Card>
   );
 };
