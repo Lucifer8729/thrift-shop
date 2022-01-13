@@ -27,6 +27,7 @@ import SignInSignUp from "./Pages/SignInSignUp/SignInSignUp";
 import Shop from "./Pages/Shop/Shop";
 import Sell from "./Pages/Sell/Sell";
 import History from "./Pages/History/History";
+import ItemsPage from "./Pages/ItemsPage/ItemsPage";
 
 const drawerWidth = 240;
 
@@ -236,6 +237,7 @@ function App() {
               <Route path="/shop" element={<Shop />} />
               <Route path="/sell" element={<Sell />} />
               <Route path="/history" element={<History />} />
+              <Route path="/shop/:id" element={<ItemsPage />} />
             </Routes>
           </Box>
         </Box>

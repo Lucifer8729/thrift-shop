@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
 import ShopCard from "../../Components/ShopCard/ShopCard";
 import { SAMPLE_DATA } from "./SAMPLE_DATA.js";
