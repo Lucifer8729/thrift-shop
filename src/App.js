@@ -23,6 +23,7 @@ import HistoryIcon from "@mui/icons-material/History";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
+import SignInSignUp from "./Pages/SignInSignUp/SignInSignUp";
 import Shop from "./Pages/Shop/Shop";
 import Sell from "./Pages/Sell/Sell";
 import History from "./Pages/History/History";
@@ -224,6 +225,7 @@ function App() {
           <Box component="main" sx={{ flexGrow: 1, p: 3, pt: 7 }}>
             {/* <DrawerHeader /> */}
             <Routes>
+              <Route path="/signIn" element={<SignInSignUp />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/sell" element={<Sell />} />
               <Route path="/history" element={<History />} />
