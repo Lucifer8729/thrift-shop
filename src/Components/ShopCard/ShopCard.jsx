@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Grid } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -10,7 +11,14 @@ import Typography from "@mui/material/Typography";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
-const ShopCard = ({ img, title, location, timeLeft }) => {
+const ShopCard = ({ img, title, location, timeLeft, id }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`/shop/${id}`);
+  };
+
   return (
     <Card sx={{ maxWidth: 300 }}>
       <CardMedia component="img" height="240" image={img} />
@@ -43,6 +51,7 @@ const ShopCard = ({ img, title, location, timeLeft }) => {
               backgroundColor: "#0078a9",
             },
           }}
+          onClick={handleClick}
         >
           enter bid
         </Button>

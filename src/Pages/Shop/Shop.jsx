@@ -21,6 +21,7 @@ const Shop = () => {
               title={data.title}
               location={data.location}
               timeLeft={data.timeLeft}
+              id={data.id}
             />
           </Grid>
         ))}
