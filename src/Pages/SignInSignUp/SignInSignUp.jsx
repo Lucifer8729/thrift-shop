@@ -1,66 +1,59 @@
-import React from 'react';
-import './Signup.css' ;
+import React from "react";
+
+import { Grid, Typography } from "@mui/material";
+
+import SignIn from "../../Components/SignIn/SignIn";
+import SignUp from "../../Components/SignUp/SignUp";
 
 const SignInSignUp = () => {
-    return (
-        <>
-            <section className="signup">
-                <div className='container'>
-                    <div className='signup-content'>
-                        <div className='signup-form'>
-                            <h2 className='form-title'> Sign Up </h2> 
-                             <form className='register-form' id='register-form'>
-                                <div className='form-group'>
-                                    <label htmlFor='name'>                             
-                                    </label>
-                                    <input type="text" name="name" id="name" autoComplete='off' placeholder='Name'/>
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlFor='email'>                      
-                                    </label>
-                                    <input type="text" name="email" id="email" autoComplete='off' placeholder='Email'/>
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlFor='mobile'>                           
-                                    </label>
-                                    <input type="text" name="mobile" id="mobile" autoComplete='off' placeholder='Mobile'/>
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlFor='password'>                    
-                                    </label>
-                                    <input type="password" name="password" id="password" autoComplete='off' placeholder='Password'/>
-                                </div>
-                                <div className='form-group'>
-                                    <label htmlFor='confirm'>                          
-                                    </label>
-                                    <input type="password" name="confirm" id="confirm" autoComplete='off' placeholder='Confirm Password'/>
-                                </div>
-                                <div className='form-group form-button'>
-                                    <input type="submit" name="sign-up-submit" id="sign-up-submit" value="Sign Up" /> 
-                                </div>
-                                <div>
-                                    <h4>or</h4>
-                                </div>
-                                <div className='form-group form-button'>
-                                    <input type="submit" name="sign-up-submit" id="sign-up-submit" value="Sign Up using Google" /> 
-                                </div>
-                                <div>
-                                    <h5>Already have an account? Login</h5>
-                                </div>
-                            </form> 
+  const [signIn, setSignIn] = React.useState(true);
+  return (
+    <>
+      <Grid container sx={{ height: "100%", backgroundColor: "white" }}>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {signIn ? (
+            <SignIn setSignIn={setSignIn} />
+          ) : (
+            <SignUp setSignIn={setSignIn} />
+          )}
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          sx={{
+            backgroundColor: "#03045e",
+            color: "white",
+            display: "flex",
+            justifyContent: "center",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h1" component="div" gutterBottom sx={{ mb: 0 }}>
+            Thrift-Shop
+          </Typography>
+          <Typography
+            variant="h5"
+            component="div"
+            sx={{ mt: 0, fontStyle: "italic" }}
+          >
+            Buying and Selling Simplified!
+          </Typography>
+        </Grid>
+      </Grid>
+    </>
+  );
+};
 
-                            {/* <div className='signup-image'>
-                                <figure>
-                                    <img src={shopimg} alt="image" />
-                                </figure> 
-                            </div> */}
-                        </div>
-                    </div>
-                </div> 
-
-            </section>
-        </>
-    )
-}
-
-export default SignInSignUp
+export default SignInSignUp;

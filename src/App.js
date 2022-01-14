@@ -22,7 +22,7 @@ import SellIcon from "@mui/icons-material/Sell";
 import HistoryIcon from "@mui/icons-material/History";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
+import LoginIcon from "@mui/icons-material/Login";
 import SignInSignUp from "./Pages/SignInSignUp/SignInSignUp";
 import Shop from "./Pages/Shop/Shop";
 import Sell from "./Pages/Sell/Sell";
@@ -99,6 +99,7 @@ const Drawer = styled(MuiDrawer, {
 function App() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [isLoggedIn, setLoggedIn] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -210,15 +211,37 @@ function App() {
                 </ListItem>
               </NavLink>
             </List>
-            <ListItem
-              button
-              sx={{ position: "absolute", bottom: 0, width: "inherit" }}
-            >
-              <ListItemIcon sx={{ pl: 1 }}>
-                <LogoutIcon />
-              </ListItemIcon>
-              <ListItemText primary="Logout" />
-            </ListItem>
+            {isLoggedIn ? (
+              <ListItem
+                button
+                sx={{ position: "absolute", bottom: 0, width: "inherit" }}
+              >
+                <ListItemIcon sx={{ pl: 1 }}>
+                  <LogoutIcon />
+                </ListItemIcon>
+                <ListItemText primary="Logout" />
+              </ListItem>
+            ) : (
+              <NavLink
+                style={({ isActive }) => {
+                  return {
+                    color: isActive ? "#03045e" : "#424242",
+                    textDecoration: "none",
+                  };
+                }}
+                to={`/signIn`}
+              >
+                <ListItem
+                  button
+                  sx={{ position: "absolute", bottom: 0, width: "100%" }}
+                >
+                  <ListItemIcon sx={{ pl: 1 }}>
+                    <LoginIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Login" />
+                </ListItem>
+              </NavLink>
+            )}
           </Drawer>
           <Box
             component="main"
@@ -234,8 +257,8 @@ function App() {
             {/* <DrawerHeader /> */}
             <Routes>
               <Route path="/signIn" element={<SignInSignUp />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/sell" element={<Sell />} />
+              <Route path="/shop" element={<Shop isLoggedIn={isLoggedIn} />} />
+              <Route path="/sell" element={<Sell isLoggedIn={isLoggedIn} />} />
               <Route path="/history" element={<History />} />
               <Route path="/shop/:id" element={<ItemsPage />} />
             </Routes>
