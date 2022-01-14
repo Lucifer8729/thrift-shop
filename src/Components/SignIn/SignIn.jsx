@@ -52,17 +52,7 @@ const SignIn = ({ setSignIn }) => {
       >
         Login
       </Button>
-      <Typography sx={{ mt: 2, mb: 2, textAlign: "center" }}>
-        <Divider
-          sx={{
-            width: "40%",
-            display: "inline-block",
-            mr: 1,
-          }}
-        />
-        OR
-        <Divider sx={{ width: "40%", display: "inline-block", ml: 1 }} />
-      </Typography>
+      <Typography sx={{ mt: 2, mb: 2, textAlign: "center" }}>OR</Typography>
       <Button
         variant="contained"
         startIcon={<GoogleIcon />}
