@@ -3,8 +3,20 @@ import { Grid } from "@mui/material";
 
 import ShopCard from "../../Components/ShopCard/ShopCard";
 import { SAMPLE_DATA } from "./SAMPLE_DATA.js";
+import { firestore } from "../../firebase/firebase.utils"
+import { collection, getDocs } from 'firebase/firestore'
 
 const Shop = ({ isLoggedIn }) => {
+  const [users, setUsers] = React.useState([]);
+  const usersCollectionRef = collection(firestore,"stuff")
+  React.useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(),id: doc.id})));
+      console.log(data);
+    };
+    getUsers();
+  }, []);
   return (
     <>
       <Grid
@@ -14,15 +26,15 @@ const Shop = ({ isLoggedIn }) => {
         alignItems="flex-start"
         spacing={2}
       >
-        {SAMPLE_DATA.map((data, i) => (
+        {users.map((user, i) => (
           <Grid item key={i}>
             <ShopCard
               isLoggedIn={isLoggedIn}
-              img={data.img}
-              title={data.title}
-              location={data.location}
-              timeLeft={data.timeLeft}
-              id={data.id}
+              img={users.img}
+              title={user.Product_Name}
+              location={user.Location}
+              timeLeft={user.Time}
+              currBid={user.Starting_Price}
             />
           </Grid>
         ))}

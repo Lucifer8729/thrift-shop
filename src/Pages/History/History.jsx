@@ -3,8 +3,20 @@ import { Grid } from "@mui/material";
 
 import HistoryCard from "../../Components/HistoryCard/HistoryCard";
 import { SAMPLE_DATA } from "./SAMPLE_DATA";
+import { firestore } from "../../firebase/firebase.utils"
+import { collection, getDocs } from 'firebase/firestore'
 
 const History = () => {
+  const [users, setUsers] = React.useState([]);
+  const usersCollectionRef = collection(firestore,"stuff")
+  React.useEffect(() => {
+    const getUsers = async () => {
+      const data = await getDocs(usersCollectionRef);
+      setUsers(data.docs.map((doc) => ({ ...doc.data(),id: doc.id})));
+      console.log(data);
+    };
+    getUsers();
+  }, []);
   return (
     <>
       <>
@@ -15,14 +27,14 @@ const History = () => {
           alignItems="flex-start"
           spacing={2}
         >
-          {SAMPLE_DATA.map((data, i) => (
+          {users.map((user, i) => (
             <Grid item key={i}>
               <HistoryCard
-                img={data.img}
-                title={data.title}
-                location={data.location}
-                timeLeft={data.timeLeft}
-                currBid={data.currBid}
+                img={user.img}
+                title={user.Product_Name}
+                location={user.Location}
+                timeLeft={user.Time}
+                currBid={user.Starting_Price}
               />
             </Grid>
           ))}
