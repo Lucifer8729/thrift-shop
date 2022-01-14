@@ -4,7 +4,7 @@ import { Grid } from "@mui/material";
 import ShopCard from "../../Components/ShopCard/ShopCard";
 import { SAMPLE_DATA } from "./SAMPLE_DATA.js";
 
-const Shop = ({ isLoggedIn }) => {
+const Shop = () => {
   return (
     <>
       <Grid
@@ -17,7 +17,6 @@ const Shop = ({ isLoggedIn }) => {
         {SAMPLE_DATA.map((data, i) => (
           <Grid item key={i}>
             <ShopCard
-              isLoggedIn={isLoggedIn}
               img={data.img}
               title={data.title}
               location={data.location}

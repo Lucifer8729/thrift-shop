@@ -3,7 +3,7 @@ import React from "react";
 import { Typography, TextField, Box, Button, Divider } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 
-const SignUp = ({ setSignIn }) => {
+const SignUp = ({ setSignIn, signInWithGoogle }) => {
   return (
     <Box>
       <Typography
@@ -67,6 +67,7 @@ const SignUp = ({ setSignIn }) => {
         sx={{
           width: "25rem",
         }}
+        onClick={signInWithGoogle}
       >
         Register with Google
       </Button>

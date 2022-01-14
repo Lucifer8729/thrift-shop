@@ -11,16 +11,12 @@ import Typography from "@mui/material/Typography";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
-const ShopCard = ({ img, title, location, timeLeft, id, isLoggedIn }) => {
+const ShopCard = ({ img, title, location, timeLeft, id }) => {
   const navigate = useNavigate();
 
   const handleClick = (e) => {
     e.preventDefault();
-    if (isLoggedIn) {
-      navigate(`/shop/${id}`);
-    } else {
-      navigate("/signIn");
-    }
+    navigate(`/shop/${id}`);
   };
 
   return (

@@ -29,6 +29,9 @@ import Sell from "./Pages/Sell/Sell";
 import History from "./Pages/History/History";
 import ItemsPage from "./Pages/ItemsPage/ItemsPage";
 
+import { auth } from "./firebase/firebase.utils";
+import PrivateRoutes from "./Components/PrivateRoutes/PrivateRoutes";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -108,6 +111,18 @@ function App() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  React.useEffect(() => {
+    const unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+      console.log(user);
+
+      setLoggedIn(user);
+    });
+
+    return () => {
+      unsubscribeFromAuth();
+    };
+  }, []);
 
   return (
     <>
@@ -215,6 +230,9 @@ function App() {
               <ListItem
                 button
                 sx={{ position: "absolute", bottom: 0, width: "inherit" }}
+                onClick={() => {
+                  auth.signOut();
+                }}
               >
                 <ListItemIcon sx={{ pl: 1 }}>
                   <LogoutIcon />
@@ -257,10 +275,32 @@ function App() {
             {/* <DrawerHeader /> */}
             <Routes>
               <Route path="/signIn" element={<SignInSignUp />} />
-              <Route path="/shop" element={<Shop isLoggedIn={isLoggedIn} />} />
-              <Route path="/sell" element={<Sell isLoggedIn={isLoggedIn} />} />
-              <Route path="/history" element={<History />} />
-              <Route path="/shop/:id" element={<ItemsPage />} />
+              <Route path="/" element={<Shop />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route
+                path="/sell"
+                element={
+                  <PrivateRoutes>
+                    <Sell />
+                  </PrivateRoutes>
+                }
+              />
+              <Route
+                path="/history"
+                element={
+                  <PrivateRoutes>
+                    <History />
+                  </PrivateRoutes>
+                }
+              />
+              <Route
+                path="/shop/:id"
+                element={
+                  <PrivateRoutes>
+                    <ItemsPage />
+                  </PrivateRoutes>
+                }
+              />
             </Routes>
           </Box>
         </Box>
