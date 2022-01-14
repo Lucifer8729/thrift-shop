@@ -29,6 +29,10 @@ import Sell from "./Pages/Sell/Sell";
 import History from "./Pages/History/History";
 import ItemsPage from "./Pages/ItemsPage/ItemsPage";
 
+import { auth } from "./firebase/firebase.utils";
+import PrivateRoutes from "./Components/PrivateRoutes/PrivateRoutes";
+import PrivateRouteToShop from "./Components/PrivateRoutes/PrivateRouteToShop";
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -109,6 +113,18 @@ function App() {
     setOpen(false);
   };
 
+  React.useEffect(() => {
+    const unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
+      console.log(user);
+
+      setLoggedIn(user);
+    });
+
+    return () => {
+      unsubscribeFromAuth();
+    };
+  }, []);
+
   return (
     <>
       <BrowserRouter>
@@ -140,14 +156,22 @@ function App() {
           </AppBar>
           <Drawer variant="permanent" open={open}>
             <DrawerHeader>
-              <List sx={{ position: "fixed", left: 0 }}>
-                <ListItem>
-                  <ListItemIcon sx={{ pl: 1 }}>
-                    <AccountCircleIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Username" />
-                </ListItem>
-              </List>
+              {isLoggedIn ? (
+                <List sx={{ position: "fixed", left: 0 }}>
+                  <ListItem>
+                    <ListItemIcon sx={{ pl: 1 }}>
+                      <AccountCircleIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={`${
+                        isLoggedIn.displayName.split(" ")[0] +
+                        " " +
+                        isLoggedIn.displayName.split(" ")[1]
+                      }`}
+                    />
+                  </ListItem>
+                </List>
+              ) : null}
 
               <IconButton onClick={handleDrawerClose}>
                 {theme.direction === "rtl" ? (
@@ -215,6 +239,9 @@ function App() {
               <ListItem
                 button
                 sx={{ position: "absolute", bottom: 0, width: "inherit" }}
+                onClick={() => {
+                  auth.signOut();
+                }}
               >
                 <ListItemIcon sx={{ pl: 1 }}>
                   <LogoutIcon />
@@ -256,11 +283,40 @@ function App() {
           >
             {/* <DrawerHeader /> */}
             <Routes>
-              <Route path="/signIn" element={<SignInSignUp />} />
-              <Route path="/shop" element={<Shop isLoggedIn={isLoggedIn} />} />
-              <Route path="/sell" element={<Sell isLoggedIn={isLoggedIn} />} />
-              <Route path="/history" element={<History />} />
-              <Route path="/shop/:id" element={<ItemsPage />} />
+              <Route
+                path="/signIn"
+                element={
+                  <PrivateRouteToShop>
+                    <SignInSignUp />
+                  </PrivateRouteToShop>
+                }
+              />
+              <Route path="/" element={<Shop />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route
+                path="/sell"
+                element={
+                  <PrivateRoutes>
+                    <Sell />
+                  </PrivateRoutes>
+                }
+              />
+              <Route
+                path="/history"
+                element={
+                  <PrivateRoutes>
+                    <History />
+                  </PrivateRoutes>
+                }
+              />
+              <Route
+                path="/shop/:id"
+                element={
+                  <PrivateRoutes>
+                    <ItemsPage />
+                  </PrivateRoutes>
+                }
+              />
             </Routes>
           </Box>
         </Box>

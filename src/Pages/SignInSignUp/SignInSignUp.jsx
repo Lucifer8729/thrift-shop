@@ -4,7 +4,7 @@ import { Grid, Typography } from "@mui/material";
 
 import SignIn from "../../Components/SignIn/SignIn";
 import SignUp from "../../Components/SignUp/SignUp";
-import {signInWithGoogle} from "../../firebase/firebase.utils"
+import { signInWithGoogle } from "../../firebase/firebase.utils";
 
 const SignInSignUp = () => {
   const [signIn, setSignIn] = React.useState(true);
@@ -23,9 +23,9 @@ const SignInSignUp = () => {
           }}
         >
           {signIn ? (
-            <SignIn setSignIn={setSignIn} signInWithGoogle={signInWithGoogle} /> 
+            <SignIn setSignIn={setSignIn} signInWithGoogle={signInWithGoogle} />
           ) : (
-            <SignUp setSignIn={setSignIn} />
+            <SignUp setSignIn={setSignIn} signInWithGoogle={signInWithGoogle} />
           )}
         </Grid>
         <Grid
