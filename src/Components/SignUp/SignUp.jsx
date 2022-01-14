@@ -1,10 +1,14 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
+import { auth } from "../../firebase/firebase.utils";
 
 import { Typography, TextField, Box, Button, Divider } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 
 const SignUp = ({ setSignIn, signInWithGoogle }) => {
-  return (
+  return auth.currentUser ? (
+    <Navigate to="/shop" />
+  ) : (
     <Box>
       <Typography
         variant="h3"
