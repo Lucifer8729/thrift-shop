@@ -26,13 +26,13 @@ const ShopCard = ({ img, title, location, timeLeft, id }) => {
         <Typography gutterBottom variant="h5" component="div" color="#03045e">
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" component="div" color="text.secondary">
           <Grid container direction="row" alignItems="center">
             <LocationOnIcon sx={{ fontSize: "large", mr: 1 }} />
             {location}
           </Grid>
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" component="div" color="text.secondary">
           <Grid container direction="row" alignItems="center">
             <AccessTimeIcon sx={{ fontSize: "large", mr: 1 }} />
             {timeLeft}

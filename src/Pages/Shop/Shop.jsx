@@ -14,8 +14,8 @@ const Shop = () => {
         alignItems="flex-start"
         spacing={2}
       >
-        {SAMPLE_DATA.map((data) => (
-          <Grid item>
+        {SAMPLE_DATA.map((data, i) => (
+          <Grid item key={i}>
             <ShopCard
               img={data.img}
               title={data.title}

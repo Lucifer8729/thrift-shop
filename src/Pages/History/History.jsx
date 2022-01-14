@@ -15,8 +15,8 @@ const History = () => {
           alignItems="flex-start"
           spacing={2}
         >
-          {SAMPLE_DATA.map((data) => (
-            <Grid item>
+          {SAMPLE_DATA.map((data, i) => (
+            <Grid item key={i}>
               <HistoryCard
                 img={data.img}
                 title={data.title}

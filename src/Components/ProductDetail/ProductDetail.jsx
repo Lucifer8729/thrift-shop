@@ -1,7 +1,7 @@
 import React from "react";
 
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,6 +10,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+
+import img from "../../Assets/chair.png";
 
 function createData(type, value) {
   return { type, value };
@@ -36,65 +38,71 @@ const style = {
   bgcolor: "#e8eaf6",
   borderRadius: "5px",
   boxShadow: 24,
-  p: 4,
+  // p: 4,
+  overflowY: "auto",
+  maxHeight: "80vh",
 };
 
 const ProductDetail = ({ close }) => {
   return (
     <Box sx={style}>
-      <IconButton
-        sx={{ position: "absolute", right: 15, top: 15 }}
-        onClick={close}
-      >
-        <CloseIcon />
-      </IconButton>
-      <Typography variant="h5" sx={{ mb: 2, color: "#03045e" }}>
-        Buyer Details :
-      </Typography>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small">
-          <TableBody>
-            {rows1.map((row) => (
-              <TableRow
-                key={row.type}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.type}
-                </TableCell>
-                <TableCell align="right" sx={{ color: "#0078a9" }}>
-                  {row.value}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <br />
-      <Typography variant="h5" sx={{ mb: 2, color: "#03045e" }}>
-        Product Details :
-      </Typography>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} size="small">
-          <TableBody>
-            {rows2.map((row) => (
-              <TableRow
-                key={row.type}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.type}
-                </TableCell>
-                <TableCell align="right" sx={{ color: "#0078a9" }}>
-                  {row.value}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <Grid container>
+        <Grid
+          item
+          xs={12}
+          lg={6}
+          sx={{ backgroundSize: "contain", backgroundRepeat: "no-repeat" }}
+        >
+          <img
+            style={{ maxWidth: "100%", height: "100%" }}
+            src={img}
+            alt="product"
+          />
+        </Grid>
+        <Grid item xs={12} lg={6} sx={{ p: 4 }}>
+          <IconButton
+            sx={{ position: "absolute", right: 15, top: 15 }}
+            onClick={close}
+          >
+            <CloseIcon />
+          </IconButton>
+          <Typography variant="h5" sx={{ mb: 2, color: "#03045e" }}>
+            Buyer Details :
+          </Typography>
+          <TableContainer component={Paper}>
+            <Table size="small">
+              <TableBody>
+                {rows1.map((row) => (
+                  <TableRow key={row.type}>
+                    <TableCell>{row.type}</TableCell>
+                    <TableCell align="right" sx={{ color: "#0078a9" }}>
+                      {row.value}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <br />
+          <Typography variant="h5" sx={{ mb: 2, color: "#03045e" }}>
+            Product Details :
+          </Typography>
+          <TableContainer component={Paper}>
+            <Table size="small">
+              <TableBody>
+                {rows2.map((row) => (
+                  <TableRow key={row.type}>
+                    <TableCell>{row.type}</TableCell>
+                    <TableCell align="right" sx={{ color: "#0078a9" }}>
+                      {row.value}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
