@@ -6,7 +6,7 @@ import { SAMPLE_DATA } from "./SAMPLE_DATA.js";
 import { firestore } from "../../firebase/firebase.utils"
 import { collection, getDocs } from 'firebase/firestore'
 
-const Shop = ({ isLoggedIn }) => {
+const Shop = () => {
   const [users, setUsers] = React.useState([]);
   const usersCollectionRef = collection(firestore,"stuff")
   React.useEffect(() => {
@@ -29,12 +29,11 @@ const Shop = ({ isLoggedIn }) => {
         {users.map((user, i) => (
           <Grid item key={i}>
             <ShopCard
-              isLoggedIn={isLoggedIn}
-              img={users.img}
-              title={user.Product_Name}
+              img={user.Image}
+              title={user.ProductName}
               location={user.Location}
-              timeLeft={user.Time}
-              currBid={user.Starting_Price}
+              timeLeft={user.TimeLeft + " days"}
+              currBid={user.StartingPrice}
             />
           </Grid>
         ))}
