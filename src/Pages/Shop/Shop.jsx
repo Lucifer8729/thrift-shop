@@ -2,17 +2,16 @@ import React from "react";
 import { Grid } from "@mui/material";
 
 import ShopCard from "../../Components/ShopCard/ShopCard";
-import { SAMPLE_DATA } from "./SAMPLE_DATA.js";
-import { firestore } from "../../firebase/firebase.utils"
-import { collection, getDocs } from 'firebase/firestore'
+import { firestore } from "../../firebase/firebase.utils";
+import { collection, getDocs } from "firebase/firestore";
 
 const Shop = () => {
   const [users, setUsers] = React.useState([]);
-  const usersCollectionRef = collection(firestore,"stuff")
+  const usersCollectionRef = collection(firestore, "stuff");
   React.useEffect(() => {
     const getUsers = async () => {
       const data = await getDocs(usersCollectionRef);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(),id: doc.id})));
+      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       console.log(data);
     };
     getUsers();
@@ -33,7 +32,8 @@ const Shop = () => {
               title={user.ProductName}
               location={user.Location}
               timeLeft={user.TimeLeft + " days"}
-              currBid={user.StartingPrice}
+              // currBid={user.StartingPrice}
+              id={user.id}
             />
           </Grid>
         ))}

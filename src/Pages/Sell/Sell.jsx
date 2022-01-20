@@ -123,6 +123,15 @@ const Sell = () => {
 
           <TextField
             onChange={(event) => {
+              setLocation(event.target.value);
+            }}
+            label="Location"
+            variant="filled"
+            sx={{ mt: 2 }}
+          />
+
+          <TextField
+            onChange={(event) => {
               setTimeLeft(event.target.value);
             }}
             label="Auction Duration"

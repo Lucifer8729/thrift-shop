@@ -11,24 +11,12 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
-import img from "../../Assets/chair.png";
+import { firestore } from "../../firebase/firebase.utils";
+import { doc, getDoc } from "firebase/firestore";
 
 function createData(type, value) {
   return { type, value };
 }
-
-const rows1 = [
-  createData("Name", "Tannay Kumar"),
-  createData("Contact", "8193742313"),
-  createData("Email", "tanaykmr@gmail.com"),
-];
-const rows2 = [
-  createData("Product Name", "Set of 2 chairs"),
-  createData("Product ID", "314eda32w2"),
-  createData("Selling Price", "$ 321.00"),
-  createData("Location", "New Delhi"),
-  createData("Status", "Picked"),
-];
 
 const style = {
   position: "absolute",
@@ -43,7 +31,50 @@ const style = {
   maxHeight: "80vh",
 };
 
-const ProductDetail = ({ close }) => {
+const ProductDetail = ({ close, id }) => {
+  const [details, setDetails] = React.useState({
+    rows1: [
+      createData("Name", "Tannay Kumar"),
+      createData("Contact", "8193742313"),
+      createData("Email", "tanaykmr@gmail.com"),
+    ],
+    rows2: [
+      createData("Product Name", "Set of 2 chairs"),
+      createData("Product ID", "314eda32w2"),
+      createData("Selling Price", "$ 321.00"),
+      createData("Location", "New Delhi"),
+      createData("Status", "Picked"),
+    ],
+  });
+
+  const userDocRef = doc(firestore, "history", id);
+  React.useEffect(() => {
+    // console.log(id);
+    const getData = async () => {
+      const data = await (await getDoc(userDocRef)).data();
+
+      setDetails(() => ({
+        itemImage: data.Image,
+
+        rows1: [
+          createData("Name", `${data.SellerName}`),
+          createData("Contact", `${data.SellerMobile}`),
+          createData("Email", `${data.SellerEmail}`),
+        ],
+
+        rows2: [
+          createData("Product Name", `${data.ProductName}`),
+          createData("Product ID", `${data.id}`),
+          createData("Selling Price", `${data.StartingPrice}`),
+          createData("Location", `${data.Location}`),
+          createData("Status", `Available`),
+        ],
+      }));
+      // console.log(data.data());
+    };
+    getData();
+  }, []);
+
   return (
     <Box sx={style}>
       <Grid container>
@@ -55,7 +86,7 @@ const ProductDetail = ({ close }) => {
         >
           <img
             style={{ maxWidth: "100%", height: "100%" }}
-            src={img}
+            src={details.itemImage}
             alt="product"
           />
         </Grid>
@@ -72,7 +103,7 @@ const ProductDetail = ({ close }) => {
           <TableContainer component={Paper}>
             <Table size="small">
               <TableBody>
-                {rows1.map((row) => (
+                {details.rows1.map((row) => (
                   <TableRow key={row.type}>
                     <TableCell>{row.type}</TableCell>
                     <TableCell align="right" sx={{ color: "#0078a9" }}>
@@ -90,7 +121,7 @@ const ProductDetail = ({ close }) => {
           <TableContainer component={Paper}>
             <Table size="small">
               <TableBody>
-                {rows2.map((row) => (
+                {details.rows2.map((row) => (
                   <TableRow key={row.type}>
                     <TableCell>{row.type}</TableCell>
                     <TableCell align="right" sx={{ color: "#0078a9" }}>

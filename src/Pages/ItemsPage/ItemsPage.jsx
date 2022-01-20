@@ -6,7 +6,9 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TextField from "@mui/material/TextField";
 
-import { SAMPLE_DATA } from "./SAMPLE_DATA";
+import { firestore } from "../../firebase/firebase.utils";
+import { doc, getDoc } from "firebase/firestore";
+import { useParams } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -30,6 +32,40 @@ function TabPanel(props) {
 
 const ItemsPage = () => {
   const [value, setValue] = React.useState(0);
+  const [fields, setFields] = React.useState({
+    itemImage: "",
+    title: "",
+    location: "",
+    timeLeft: "",
+    currentBid: "",
+    tab1: "",
+    tab2: "",
+    tab3: "",
+  });
+
+  const { id } = useParams();
+
+  const usersDocRef = doc(firestore, "stuff", id);
+
+  React.useEffect(() => {
+    // console.log(id);
+    const getData = async () => {
+      const data = await getDoc(usersDocRef);
+
+      setFields({
+        itemImage: data.data().Image,
+        title: data.data().ProductName,
+        location: data.data().Location,
+        timeLeft: data.data().TimeLeft,
+        currentBid: data.data().StartingPrice,
+        tab1: data.data().ProductDesc,
+        tab2: data.data().Location,
+        tab3: data.data().SellerEmail,
+      });
+      // console.log(data.data());
+    };
+    getData();
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -51,31 +87,31 @@ const ItemsPage = () => {
           }}
         >
           <img
-            style={{ maxWidth: "100%" }}
-            src={SAMPLE_DATA.itemImage}
+            style={{ maxWidth: "100%", width: "100%" }}
+            src={fields.itemImage}
             alt="product"
           />
         </Grid>
         <Grid item xs={12} md={6} sx={{ ml: 4 }}>
           <Typography gutterBottom variant="h3" component="div" color="#03045e">
-            {SAMPLE_DATA.title}
+            {fields.title}
           </Typography>
           <Typography variant="h5" color="text.secondary">
             <Grid container direction="row" alignItems="center">
               <LocationOnIcon sx={{ fontSize: "xl", mr: 1 }} />
-              {SAMPLE_DATA.location}
+              {fields.location}
             </Grid>
           </Typography>
           <Typography variant="h5" color="text.secondary">
             <Grid container direction="row" alignItems="center">
               <AccessTimeIcon sx={{ fontSize: "xl", mr: 1 }} />
-              {SAMPLE_DATA.timeLeft}
+              {fields.timeLeft}
             </Grid>
           </Typography>
           <Typography variant="h5" color="text.secondary">
             <Grid container direction="row" alignItems="center">
               <AttachMoneyIcon sx={{ fontSize: "xl", mr: 1 }} />
-              {SAMPLE_DATA.currentBid}
+              {fields.currentBid}
             </Grid>
           </Typography>
           <TextField
@@ -115,13 +151,13 @@ const ItemsPage = () => {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            {SAMPLE_DATA.tab1}
+            {fields.tab1}
           </TabPanel>
           <TabPanel value={value} index={1}>
-            {SAMPLE_DATA.tab2}
+            {fields.tab2}
           </TabPanel>
           <TabPanel value={value} index={2}>
-            {SAMPLE_DATA.tab3}
+            {fields.tab3}
           </TabPanel>
         </Grid>
       </Grid>

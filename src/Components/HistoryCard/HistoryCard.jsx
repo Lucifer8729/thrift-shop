@@ -11,7 +11,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 import ProductDetail from "../ProductDetail/ProductDetail";
 
-const HistoryCard = ({ img, title, location, timeLeft, currBid }) => {
+const HistoryCard = ({ img, title, location, timeLeft, currBid, id }) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -51,7 +51,7 @@ const HistoryCard = ({ img, title, location, timeLeft, currBid }) => {
       </CardActionArea>
       <Modal open={open} onClose={handleClose}>
         <Box>
-          <ProductDetail close={handleClose} />
+          <ProductDetail close={handleClose} id={id} />
         </Box>
       </Modal>
     </Card>
