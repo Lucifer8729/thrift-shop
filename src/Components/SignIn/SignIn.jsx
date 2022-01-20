@@ -1,11 +1,31 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+
 import { auth } from "../../firebase/firebase.utils";
+import { useState } from "react";
+import {signInWithEmailAndPassword} from "firebase/auth";
 
 import { Typography, TextField, Box, Button, Divider } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 
 const SignIn = ({ setSignIn, signInWithGoogle }) => {
+
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+  const login = async () => {
+    try {
+      const user = await signInWithEmailAndPassword(
+        auth,
+        loginEmail,
+        loginPassword
+      );
+      console.log(user);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return auth.currentUser ? (
     <Navigate to="/shop" />
   ) : (
@@ -30,6 +50,9 @@ const SignIn = ({ setSignIn, signInWithGoogle }) => {
         variant="standard"
         placeholder="Email Id"
         sx={{ width: "45ch" }}
+        onChange={(event) => {
+          setLoginEmail(event.target.value);
+        }}
       />
       <Typography
         variant="h6"
@@ -44,6 +67,9 @@ const SignIn = ({ setSignIn, signInWithGoogle }) => {
         type="password"
         placeholder="password"
         sx={{ width: "45ch" }}
+        onChange={(event) => {
+          setLoginPassword(event.target.value);
+        }}
       />
       <br />
       <Button
@@ -53,6 +79,7 @@ const SignIn = ({ setSignIn, signInWithGoogle }) => {
           backgroundColor: "#03045e",
           width: "25rem",
         }}
+        onClick={login}
       >
         Login
       </Button>

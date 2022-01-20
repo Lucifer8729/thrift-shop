@@ -164,9 +164,7 @@ function App() {
                     </ListItemIcon>
                     <ListItemText
                       primary={`${
-                        isLoggedIn.displayName.split(" ")[0] +
-                        " " +
-                        isLoggedIn.displayName.split(" ")[1]
+                        isLoggedIn.displayName
                       }`}
                     />
                   </ListItem>

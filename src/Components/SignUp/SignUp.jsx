@@ -1,11 +1,48 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import { auth } from "../../firebase/firebase.utils";
+import { useState } from "react";
+import {
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { firestore } from "../../firebase/firebase.utils";
+import {
+  collection,
+} from "firebase/firestore";
 
 import { Typography, TextField, Box, Button, Divider } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 
 const SignUp = ({ setSignIn, signInWithGoogle }) => {
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  
+  
+
+  const register = async () => {
+      
+    try {
+      const user = await createUserWithEmailAndPassword(
+        auth,
+        registerEmail,
+        registerPassword
+      );
+      console.log(user);
+
+    } catch (error) {
+      console.log(error.message);
+    }
+    firestore.collection("users").add({
+      Name: name, 
+      Phone: phone,
+      Email: registerEmail 
+    });
+  };
+
+  
+ 
   return auth.currentUser ? (
     <Navigate to="/shop" />
   ) : (
@@ -24,6 +61,9 @@ const SignUp = ({ setSignIn, signInWithGoogle }) => {
         variant="standard"
         placeholder="Name"
         sx={{ width: "45ch", mt: 0 }}
+        onChange={(event) => {
+          setName(event.target.value);
+        }}
       />
       <br />
       <TextField
@@ -31,12 +71,18 @@ const SignUp = ({ setSignIn, signInWithGoogle }) => {
         variant="standard"
         placeholder="Email Id"
         sx={{ width: "45ch", mt: 2 }}
+        onChange={(event) => {
+          setRegisterEmail(event.target.value);
+        }}
       />
       <br />
       <TextField
         variant="standard"
         placeholder="Phone Number"
         sx={{ width: "45ch", mt: 2 }}
+        onChange={(event) => {
+          setPhone(event.target.value);
+        }}
       />
       <br />
       <TextField
@@ -44,6 +90,9 @@ const SignUp = ({ setSignIn, signInWithGoogle }) => {
         type="password"
         placeholder="Password"
         sx={{ width: "45ch", mt: 2 }}
+        onChange={(event) => {
+          setRegisterPassword(event.target.value);
+        }}
       />
       <br />
       <TextField
@@ -60,6 +109,7 @@ const SignUp = ({ setSignIn, signInWithGoogle }) => {
           backgroundColor: "#03045e",
           width: "25rem",
         }}
+        onClick={register}
       >
         Register
       </Button>
